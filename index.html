@@ -624,14 +624,45 @@
       margin-right: 6px;
     }
 
-    /* Responsive */
+    /* Responsive & Mobile-First Adaptation */
     @media (max-width: 900px) {
-      .slide { inset: 65px 16px 55px 16px; }
-      .slide-card { padding: 24px; }
-      .slide-h1 { font-size: 24px; }
-      .vocab-list, .media-grid, .split-grid, .ring-grid { grid-template-columns: 1fr; }
-      .ring-node { aspect-ratio: auto; border-radius: 14px; padding: 12px; }
+      .slide { inset: 65px 16px 56px 16px; }
+      .slide-card { padding: 24px 20px; }
+      .slide-h1 { font-size: 26px; }
+      .vocab-list, .media-grid, .split-grid { grid-template-columns: 1fr; }
+      .ring-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .ring-node { aspect-ratio: auto; border-radius: 14px; padding: 14px 10px; }
       .footer-hints { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      header.deck-header { height: 50px; padding: 0 14px; }
+      .header-title { display: none; } /* Save space on small phone headers */
+      .slide { inset: 56px 10px 52px 10px; }
+      .slide-card {
+        padding: 18px 15px;
+        gap: 14px;
+        border-radius: 16px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .slide-h1 { font-size: 21px; line-height: 1.3; }
+      .slide-h2 { font-size: 13.5px; }
+      .reading-box { font-size: 14.5px; padding: 14px 16px; line-height: 1.65; }
+      .capsule-grid { grid-template-columns: 1fr; gap: 10px; }
+      .liquid-capsule { padding: 12px 14px; }
+      .vocab-card { padding: 12px 14px; }
+      .vocab-word { font-size: 16px; }
+      .vocab-ipa { font-size: 13px; }
+      .vocab-meaning { font-size: 13px; }
+      .ring-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .ring-node { border-radius: 12px; padding: 10px 8px; }
+      .ring-title { font-size: 13px; }
+      .media-grid { grid-template-columns: 1fr; gap: 12px; }
+      .media-card { padding: 15px; }
+      .split-grid { grid-template-columns: 1fr; gap: 12px; }
+      .split-card { padding: 16px; }
+      footer.deck-footer { height: 48px; padding: 0 14px; }
+      .btn-nav { padding: 6px 16px; font-size: 13px; font-weight: 500; }
     }
   </style>
 </head>
@@ -1272,6 +1303,31 @@
             break;
         }
       });
+
+      // Mobile Touch Gesture Support (左右滑動切換投影片)
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      window.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      window.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        // 水平滑動距離大於 45px 且明顯大於垂直滾動，觸發翻頁
+        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.4) {
+          if (diffX < 0) {
+            nextSlide(); // 向左滑：下一頁
+          } else {
+            prevSlide(); // 向右滑：上一頁
+          }
+        }
+      }, { passive: true });
 
       // Init
       updateSlide(0);
