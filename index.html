@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Are We Really Keeping? — TED English Reading Club</title>
+  <style>
+    :root {
+      --bg-base: #141619;
+      --bg-surface: rgba(28, 31, 38, 0.72);
+      --bg-surface-elevated: rgba(38, 42, 52, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(217, 168, 125, 0.4);
+      --text-main: #f0ede8;
+      --text-muted: #a6a39d;
+      --text-subtle: #73706b;
+      
+      /* Slide-type thematic colors (Morandi / earthy / deep) */
+      --color-reading: #85b89c;
+      --color-reading-bg: rgba(45, 74, 62, 0.35);
+      --color-reading-border: rgba(133, 184, 156, 0.25);
+      
+      --color-psychology: #7ba4cc;
+      --color-psychology-bg: rgba(37, 54, 74, 0.35);
+      --color-psychology-border: rgba(123, 164, 204, 0.25);
+      
+      --color-discussion: #d9a87d;
+      --color-discussion-bg: rgba(74, 60, 48, 0.35);
+      --color-discussion-border: rgba(217, 168, 125, 0.25);
+      
+      --color-aesthetic: #c98ca7;
+      --color-aesthetic-bg: rgba(68, 46, 59, 0.35);
+      --color-aesthetic-border: rgba(201, 140, 167, 0.25);
+
+      --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans TC', sans-serif;
+      --font-phonetic: 'Segoe UI', Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 20% 20%, rgba(45, 74, 62, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(68, 46, 59, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 50% 50%, rgba(37, 54, 74, 0.12) 0%, transparent 60%);
+      z-index: 0;
+      transition: all 0.8s ease;
+    }
+
+    /* Top Navigation Header */
+    header.deck-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 50;
+      background: rgba(20, 22, 25, 0.7);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-pill {
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-tool {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-tool:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--border-focus);
+    }
+
+    .btn-tool.active {
+      background: var(--color-discussion-bg);
+      border-color: var(--color-discussion);
+      color: var(--color-discussion);
+    }
+
+    /* Main Slide Container */
+    main.deck-stage {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 58px;
+      padding-bottom: 50px;
+      z-index: 10;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 70px 48px 60px 48px;
+      display: none;
+      opacity: 0;
+      transform: translateY(14px) scale(0.99);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-direction: column;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Slide Card Container */
+    .slide-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 38px 48px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    /* Scrollbar */
+    .slide-card::-webkit-scrollbar {
+      width: 6px;
+    }
+    .slide-card::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+
+    /* Header elements inside slide */
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      text-transform: uppercase;
+    }
+
+    .slide-tag.reading { background: var(--color-reading-bg); color: var(--color-reading); border: 1px solid var(--color-reading-border); }
+    .slide-tag.psychology { background: var(--color-psychology-bg); color: var(--color-psychology); border: 1px solid var(--color-psychology-border); }
+    .slide-tag.discussion { background: var(--color-discussion-bg); color: var(--color-discussion); border: 1px solid var(--color-discussion-border); }
+    .slide-tag.aesthetic { background: var(--color-aesthetic-bg); color: var(--color-aesthetic); border: 1px solid var(--color-aesthetic-border); }
+
+    .slide-h1 {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .slide-h2 {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Glass capsules (Liquid Capsule / Frosted Pills) */
+    .capsule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .liquid-capsule {
+      background: rgba(35, 39, 48, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(14px);
+      border-radius: 16px;
+      padding: 16px 20px;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .liquid-capsule:hover {
+      background: rgba(45, 51, 64, 0.85);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .capsule-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .capsule-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Reading paragraphs */
+    .reading-box {
+      background: rgba(45, 74, 62, 0.15);
+      border-left: 4px solid var(--color-reading);
+      padding: 20px 24px;
+      border-radius: 0 14px 14px 0;
+      font-size: 17px;
+      line-height: 1.7;
+      color: #e5ece8;
+    }
+
+    /* Vocab & Phonetics Table / Grid (Slide 5) */
+    .vocab-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .vocab-card {
+      background: rgba(30, 34, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.2s ease;
+    }
+
+    .vocab-card:hover {
+      border-color: var(--color-psychology);
+    }
+
+    .vocab-header {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .vocab-word {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+
+    .vocab-ipa {
+      font-family: var(--font-phonetic);
+      font-size: 14px;
+      color: var(--color-psychology);
+      background: rgba(123, 164, 204, 0.12);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .vocab-meaning {
+      font-size: 13.5px;
+      color: #d1c9be;
+      line-height: 1.5;
+    }
+
+    .vocab-sub {
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+
+    /* Psychology Circular Loop (Slide 6) */
+    .ring-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 0;
+      position: relative;
+    }
+
+    .ring-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      width: 100%;
+      max-width: 820px;
+    }
+
+    .ring-node {
+      background: radial-gradient(circle at 30% 30%, rgba(55, 65, 80, 0.8), rgba(26, 30, 38, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16px;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .ring-node:hover {
+      transform: scale(1.04);
+      border-color: var(--color-psychology);
+      box-shadow: 0 12px 30px rgba(123, 164, 204, 0.25);
+    }
+
+    .ring-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-psychology);
+      margin-bottom: 2px;
+    }
+
+    .ring-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .ring-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* TV Shows Cards (Slide 10) */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 4px;
+    }
+
+    .media-card {
+      background: rgba(32, 36, 46, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .media-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-aesthetic);
+    }
+
+    .media-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-aesthetic);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .media-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .media-script-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      color: #ded9d0;
+      line-height: 1.5;
+      border-left: 2px solid var(--color-aesthetic);
+      font-style: italic;
+    }
+
+    .media-cn-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Discussion Split Cards (Slide 4, 8, 9) */
+    .split-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 6px;
+    }
+
+    .split-card {
+      background: rgba(35, 39, 50, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .split-card.alt {
+      background: rgba(45, 38, 48, 0.7);
+      border-color: var(--color-aesthetic-border);
+    }
+
+    .split-header {
+      font-size: 17px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .split-content {
+      font-size: 14px;
+      color: #d1cdc7;
+      line-height: 1.6;
+    }
+
+    /* Bottom Navigation Bar */
+    footer.deck-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(18, 20, 24, 0.85);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-subtle);
+      z-index: 50;
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+
+    .footer-hints {
+      display: flex;
+      gap: 14px;
+    }
+
+    .key-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-family: monospace;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-nav {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 4px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    /* Speaker Notes Drawer (Presenter Edition) */
+    .notes-drawer {
+      position: fixed;
+      bottom: 48px;
+      left: 0;
+      right: 0;
+      background: rgba(22, 25, 32, 0.96);
+      backdrop-filter: blur(24px);
+      border-top: 2px solid var(--color-discussion);
+      padding: 20px 36px;
+      box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.6);
+      max-height: 260px;
+      overflow-y: auto;
+      transform: translateY(105%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 60;
+    }
+
+    .notes-drawer.open {
+      transform: translateY(0);
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 8px;
+    }
+
+    .notes-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-discussion);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .notes-body {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: #e6e2dc;
+    }
+
+    .notes-body p {
+      margin-bottom: 8px;
+    }
+
+    .notes-body strong {
+      color: #ffffff;
+    }
+
+    .notes-body .cue-tag {
+      background: rgba(217, 168, 125, 0.15);
+      color: var(--color-discussion);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .slide { inset: 65px 16px 55px 16px; }
+      .slide-card { padding: 24px; }
+      .slide-h1 { font-size: 24px; }
+      .vocab-list, .media-grid, .split-grid, .ring-grid { grid-template-columns: 1fr; }
+      .ring-node { aspect-ratio: auto; border-radius: 14px; padding: 12px; }
+      .footer-hints { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow" id="ambientGlow"></div>
+
+  <!-- Header -->
+  <header class="deck-header">
+    <div class="header-left">
+      <span class="header-badge">TED English Club</span>
+      <span class="header-title">What Are We Really Keeping?</span>
+    </div>
+    <div class="header-right">
+      <span class="progress-pill" id="slideIndicator">01 / 13</span>
+      <!-- Mode Toggle / Notes Button (Only in Presenter) -->
+      
+      <button class="btn-tool" id="btnFullscreen" title="按 F 全螢幕">全螢幕 (F)</button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main class="deck-stage">
+
+    <!-- Slide 1: Cover -->
+    <div class="slide active" data-type="reading" >
+      <div class="slide-card">
+        <span class="slide-tag reading">Opening Reflection</span>
+        <h1 class="slide-h1">What Are We Really Keeping?</h1>
+        <h2 class="slide-h2">Rethinking Aesthetics, Possessions, and Joy Through Everyday Psychology</h2>
+        
+        <div class="reading-box" style="margin-top: 10px;">
+          "We surround ourselves with things not just for their utility, but for the stories they tell about who we once were, and who we hope to become."
+        </div>
+
+        <div class="capsule-grid" style="margin-top: 10px;">
+          <div class="liquid-capsule">
+            <span class="capsule-title">✦ TED Inspiration 1</span>
+            <span class="capsule-desc"><em>"Where joy hides and how to find it"</em> — Ingrid Fetell Lee</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">✦ TED Inspiration 2</span>
+            <span class="capsule-desc"><em>"Less stuff, more happiness"</em> — Graham Hill</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">✦ Reading Goal</span>
+            <span class="capsule-desc">探索物品背後的心理機制，練習溫和、自在的慢捨離美學。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Read-Aloud: Why Letting Go Feels Difficult -->
+    <div class="slide" data-type="reading" >
+      <div class="slide-card">
+        <span class="slide-tag reading">English Read-Aloud</span>
+        <h1 class="slide-h1">Why Letting Go Feels Difficult</h1>
+        <h2 class="slide-h2">The emotional weight behind everyday objects</h2>
+
+        <div class="reading-box">
+          Letting go of an object rarely feels like throwing away plastic or paper. Instead, it feels like editing a chapter of our own identity. We keep clothes that no longer fit, books we may never read, and souvenirs from places we will never visit again. When we hesitate to part with them, we are not holding onto physical matter—we are protecting the memories, promises, and comfort they represent.
+        </div>
+
+        <div class="capsule-grid">
+          <div class="liquid-capsule">
+            <span class="capsule-title">Attachment to the Past</span>
+            <span class="capsule-desc">物品封存了舊時光，丟棄彷彿否定了當時努力的自己。</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">Fear of Future Regret</span>
+            <span class="capsule-desc">「也許以後用得到」的焦慮，讓閒置空間變成昂貴倉庫。</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">Sensory & Emotional Safety</span>
+            <span class="capsule-desc">被熟悉的物品包圍，是大腦尋求安全感與溫暖的本能。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Cognitive Background -->
+    <div class="slide" data-type="psychology" >
+      <div class="slide-card">
+        <span class="slide-tag psychology">Psychology Foundation</span>
+        <h1 class="slide-h1">The Mind & Our Things</h1>
+        <h2 class="slide-h2">Why decluttering is not just cleaning—it is a cognitive battle</h2>
+
+        <div class="split-grid">
+          <div class="split-card">
+            <span class="split-header">🧠 The Illusion of Ownership</span>
+            <p class="split-content">
+              心理學研究顯示，只要雙手觸碰一件物品，大腦就會在幾秒鐘內建立「延伸自我」（Extended Self）。我們將物品視為自尊與身分的一部分，因此放棄物品會啟動如同失去身體器官般的防衛反應。
+            </p>
+          </div>
+          <div class="split-card">
+            <span class="split-header">⚡ Cognitive Load & Visual Noise</span>
+            <p class="split-content">
+              視線範圍內的每件雜物，都是一個「未完成的微小指令」（Micro-task）。雜亂無章的房間會持續刺激大腦皮質醇分泌，導致慢性焦慮與無意識的心智耗竭。
+            </p>
+          </div>
+        </div>
+
+        <div class="liquid-capsule" style="margin-top: 4px;">
+          <span class="capsule-title" style="color: var(--color-psychology);">✦ Core Takeaway</span>
+          <span class="capsule-desc">明白不是你意志力薄弱，而是大腦演化留下的本能在跟你作對。理解心理機制，是溫柔對待自己的第一步。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Real-life Discussion -->
+    <div class="slide" data-type="discussion" >
+      <div class="slide-card">
+        <span class="slide-tag discussion">Member Discussion</span>
+        <h1 class="slide-h1">Two Spaces in Your Life</h1>
+        <h2 class="slide-h2">Sharing real experiences from your living environment</h2>
+
+        <div class="split-grid">
+          <div class="split-card" style="border-top: 3px solid var(--color-reading);">
+            <span class="split-header" style="color: var(--color-reading);">🌿 1. The Peaceful Sanctuary</span>
+            <p class="split-content">
+              <strong>整理後感覺美好的空間：</strong><br>
+              在家中，有沒有某個檯面、書桌、茶水角落，是你在整理乾淨後，每次經過都忍不住停下來深呼吸、覺得心靈被治癒的地方？
+            </p>
+            <span style="font-size: 13px; color: var(--text-muted);"><em>"How does that clarity make you feel?"</em></span>
+          </div>
+
+          <div class="split-card" style="border-top: 3px solid var(--color-discussion);">
+            <span class="split-header" style="color: var(--color-discussion);">📦 2. The Hesitation Corner</span>
+            <p class="split-content">
+              <strong>至今不知道怎麼下手的角落：</strong><br>
+              哪一個抽屜、衣櫃或紙箱，是你每次看到都嘆一口氣、想整理卻總是關上櫃門逃避的「心頭重擔」？
+            </p>
+            <span style="font-size: 13px; color: var(--text-muted);"><em>"What is the biggest friction stopping you?"</em></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Core Vocabulary & Pronunciation (User's Exact Specification) -->
+    <div class="slide" data-type="psychology" >
+      <div class="slide-card">
+        <span class="slide-tag psychology">Vocabulary & Phonetics</span>
+        <h1 class="slide-h1">Core Concepts & Pronunciation</h1>
+        <h2 class="slide-h2">英文名詞緊接音標，下一行中文說明與生活對照</h2>
+
+        <div class="vocab-list">
+          <!-- 1. Endowment Effect -->
+          <div class="vocab-card">
+            <div class="vocab-header">
+              <span class="vocab-word">Endowment Effect</span>
+              <span class="vocab-ipa">/ɪnˈdaʊmənt ɪˈfɛkt/</span>
+            </div>
+            <div class="vocab-meaning">稟賦效應</div>
+            <div class="vocab-sub">為什麼自己的東西特別捨不得？擁有某物後，對其估值會大幅高於市場真實價值。</div>
+          </div>
+
+          <!-- 2. Sunk Cost Fallacy -->
+          <div class="vocab-card">
+            <div class="vocab-header">
+              <span class="vocab-word">Sunk Cost Fallacy</span>
+              <span class="vocab-ipa">/sʌŋk kɔːst ˈfæləsi/</span>
+            </div>
+            <div class="vocab-meaning">沉沒成本謬誤</div>
+            <div class="vocab-sub">花過的錢，為什麼影響現在的決定？「買很貴所以捨不得丟」，實際上錢早就已經花掉了。</div>
+          </div>
+
+          <!-- 3. Loss Aversion -->
+          <div class="vocab-card">
+            <div class="vocab-header">
+              <span class="vocab-word">Loss Aversion</span>
+              <span class="vocab-ipa">/lɔːs əˈvɜːrʒən/</span>
+            </div>
+            <div class="vocab-meaning">損失趨避</div>
+            <div class="vocab-sub">想到丟錯東西的懊悔，遠比想到騰出清爽空間更難受；人類對失去的痛感是獲得快感的兩倍。</div>
+          </div>
+
+          <!-- 4. Hedonic Adaptation -->
+          <div class="vocab-card">
+            <div class="vocab-header">
+              <span class="vocab-word">Hedonic Adaptation</span>
+              <span class="vocab-ipa">/hɪˈdɑːnɪk ˌædæpˈteɪʃən/</span>
+            </div>
+            <div class="vocab-meaning">享樂適應</div>
+            <div class="vocab-sub">為什麼買新東西的快樂迅速消退？大腦會迅速適應新刺激，讓人重新回到慾望的原點。</div>
+          </div>
+
+          <!-- 5. Decision Fatigue -->
+          <div class="vocab-card">
+            <div class="vocab-header">
+              <span class="vocab-word">Decision Fatigue</span>
+              <span class="vocab-ipa">/dɪˈsɪʒən fəˈtiːɡ/</span>
+            </div>
+            <div class="vocab-meaning">決策疲勞</div>
+            <div class="vocab-sub">為什麼整理大量物品容易讓人筋疲力盡？每一個「留或不留」都在微量消耗意志力能量。</div>
+          </div>
+
+          <!-- 6. Aesthetic Pleasure -->
+          <div class="vocab-card">
+            <div class="vocab-header">
+              <span class="vocab-word">Aesthetic Pleasure</span>
+              <span class="vocab-ipa">/ɛsˈθɛtɪk ˈplɛʒər/</span>
+            </div>
+            <div class="vocab-meaning">審美愉悅</div>
+            <div class="vocab-sub">美感本身能不能成為留下的理由？若一件物品單純看著就帶來平靜與喜悅，它就具備獨特價值。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: The Psychology Loop (Circular Badges / Ring Layout) -->
+    <div class="slide" data-type="psychology" >
+      <div class="slide-card">
+        <span class="slide-tag psychology">Cognitive Loop</span>
+        <h1 class="slide-h1">The Psychology Loop</h1>
+        <h2 class="slide-h2">六個心理學概念的動態循環：從衝動擁抱到心智負擔</h2>
+
+        <div class="ring-container">
+          <div class="ring-grid">
+            <div class="ring-node">
+              <span class="ring-num">01</span>
+              <span class="ring-title">Hedonic Adaptation</span>
+              <span class="ring-sub">享樂適應<br>新鮮感消退</span>
+            </div>
+            <div class="ring-node">
+              <span class="ring-num">02</span>
+              <span class="ring-title">Endowment Effect</span>
+              <span class="ring-sub">稟賦效應<br>貼上自我標籤</span>
+            </div>
+            <div class="ring-node">
+              <span class="ring-num">03</span>
+              <span class="ring-title">Sunk Cost Fallacy</span>
+              <span class="ring-sub">沉沒成本<br>金錢情感捆綁</span>
+            </div>
+            <div class="ring-node">
+              <span class="ring-num">04</span>
+              <span class="ring-title">Loss Aversion</span>
+              <span class="ring-sub">損失趨避<br>恐懼未來懊悔</span>
+            </div>
+            <div class="ring-node">
+              <span class="ring-num">05</span>
+              <span class="ring-title">Decision Fatigue</span>
+              <span class="ring-sub">決策疲勞<br>拖延放棄整理</span>
+            </div>
+            <div class="ring-node" style="border-color: var(--color-aesthetic);">
+              <span class="ring-num" style="color: var(--color-aesthetic);">06</span>
+              <span class="ring-title">Aesthetic Pleasure</span>
+              <span class="ring-sub">審美愉悅<br>重新定義心動</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; font-size: 13px; color: var(--text-muted); margin-top: -6px;">
+          ✦ 跳出死循環的關鍵：用「審美愉悅」過濾物品，而非用「損失恐懼」堆積雜物。
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Mindful Methods: Slow Decluttering & Maybe Box -->
+    <div class="slide" data-type="reading" >
+      <div class="slide-card">
+        <span class="slide-tag reading">Practical Framework</span>
+        <h1 class="slide-h1">Mindful Methods: Gentle Editing</h1>
+        <h2 class="slide-h2">把心理學洞察轉化為無痛日常實踐的兩大工具</h2>
+
+        <div class="split-grid">
+          <div class="split-card">
+            <span class="split-header" style="color: var(--color-reading);">🍃 1. Slow Decluttering (慢捨離)</span>
+            <p class="split-content">
+              <strong>拒絕「暴風式斷捨離」的反彈：</strong><br>
+              不需要一口氣清空整個房間。每天或每週只專注於「一個抽屜」或「五件物品」。用微小的步伐前進，大腦就不會引發恐懼警報，避免造成決策疲勞。
+            </p>
+            <div class="liquid-capsule" style="padding: 10px 14px; margin-top: 6px;">
+              <span style="font-size: 12px; color: var(--color-reading); font-weight: 600;">Core Rule</span>
+              <span style="font-size: 12.5px; color: var(--text-muted);">「持續性的微調，勝過一年一次的毀滅性清理。」</span>
+            </div>
+          </div>
+
+          <div class="split-card">
+            <span class="split-header" style="color: var(--color-discussion);">📦 2. The Maybe Box (也許箱法則)</span>
+            <p class="split-content">
+              <strong>化解稟賦效應與損失趨避的解藥：</strong><br>
+              對猶豫不決的物品，不要逼自己立刻丟掉。把它們整齊放進「也許箱」，標註 30 或 60 天後的日期並收進儲藏室。這段期間如果不曾想起，說明它已自然淡出自我的延伸。
+            </p>
+            <div class="liquid-capsule" style="padding: 10px 14px; margin-top: 6px;">
+              <span style="font-size: 12px; color: var(--color-discussion); font-weight: 600;">Core Rule</span>
+              <span style="font-size: 12.5px; color: var(--text-muted);">「讓時間幫你完成脫鉤，無痛撫平丟棄的焦慮。」</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Discussion: The Hidden Cost of Clutter -->
+    <div class="slide" data-type="discussion" >
+      <div class="slide-card">
+        <span class="slide-tag discussion">Critical Thinking</span>
+        <h1 class="slide-h1">The Hidden Cost of Clutter</h1>
+        <h2 class="slide-h2">What our possessions quietly take from us without asking</h2>
+
+        <div class="reading-box" style="font-size: 15.5px; padding: 16px 20px;">
+          "Every possession demands rent. It charges you in attention, time to clean, energy to organize, and the subtle guilt of not using it enough."
+        </div>
+
+        <div class="capsule-grid">
+          <div class="liquid-capsule">
+            <span class="capsule-title">1. Mental Bandwidth</span>
+            <span class="capsule-desc">視線中每一次掃過雜物，大腦都得花費 0.1 秒做出「稍後再收」的壓抑。</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">2. Physical Space Rent</span>
+            <span class="capsule-desc">每坪高昂的房價與租金，有多少比例是付給「好幾年沒打開過的紙箱」？</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">3. Subtle Guilt</span>
+            <span class="capsule-desc">沒翻開的書、標籤未剪的衣服，都在日常中向你發射微弱的自我懷疑。</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">4. Time Friction</span>
+            <span class="capsule-desc">人生平均有整整一年花在「翻找不知道塞在哪裡的鑰匙、電線或文件」。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Discussion: Does Clutter Always Mean Stress? -->
+    <div class="slide" data-type="discussion" >
+      <div class="slide-card">
+        <span class="slide-tag discussion">Aesthetic Debate</span>
+        <h1 class="slide-h1">Does Clutter Always Mean Stress?</h1>
+        <h2 class="slide-h2">Distinguishing joyful abundance from suffocating chaos</h2>
+
+        <div class="split-grid">
+          <div class="split-card alt">
+            <span class="split-header" style="color: var(--color-aesthetic);">✨ A. Curated Abundance (有情的美感堆疊)</span>
+            <p class="split-content">
+              <strong>不是每個人都適合空無一物的白盒子：</strong><br>
+              裝滿喜愛唱片的面牆、排滿心愛植物的窗台、陳列旅途紀念品的書架。如果物品是有被珍惜、有呼吸感且能滋養靈魂的，多樣的物品即是溫暖的家，而非雜亂。
+            </p>
+          </div>
+
+          <div class="split-card">
+            <span class="split-header" style="color: #ffffff;">🌫️ B. Suffocating Chaos (無意識的雜物淤積)</span>
+            <p class="split-content">
+              <strong>界線在哪裡？</strong><br>
+              當物品開始奪走平靜、妨礙日常生活功能（找不到桌面吃飯、沙發堆滿衣服不能坐），物品就從「主人的陪伴者」反客為主變成了「空間的佔領者」。
+            </p>
+          </div>
+        </div>
+
+        <div style="font-size: 13.5px; color: var(--text-muted); text-align: center; margin-top: 4px;">
+          ✦ 提問討論：在你的標準中，<strong>「溫馨有溫度的充實」</strong>與<strong>「令人煩躁的堆積」</strong>的分水嶺是什麼？
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 10: TV Shows & Media Inspirations (User's Exact Specification) -->
+    <div class="slide" data-type="aesthetic" >
+      <div class="slide-card">
+        <span class="slide-tag aesthetic">Media Inspirations</span>
+        <h1 class="slide-h1">Three Inspiring Perspectives</h1>
+        <h2 class="slide-h2">三部探討物品與內在關係的代表性影劇與主持講稿</h2>
+
+        <div class="media-grid">
+          <!-- Show 1 -->
+          <div class="media-card">
+            <span class="media-badge">Japanese Drama</span>
+            <span class="media-title">《我的家空無一物》</span>
+            <span style="font-size: 12px; color: var(--text-subtle);">わたしのウチには、なんにもない</span>
+            <div class="media-script-box">
+              "Throwing things away isn't about cruelty; it's about making space so you can truly cherish what remains."
+            </div>
+            <p class="media-cn-desc">
+              女主角麻衣將「扔東西變態」演得生動幽默。這部日劇讓我們看見：當物質退到極簡背景，留下的家人互動與空氣流動，才是生活最純粹的本質。
+            </p>
+          </div>
+
+          <!-- Show 2 -->
+          <div class="media-card">
+            <span class="media-badge">Netflix Series</span>
+            <span class="media-title">《怦然心動的人生整理魔法》</span>
+            <span style="font-size: 12px; color: var(--text-subtle);">Tidying Up with Marie Kondo</span>
+            <div class="media-script-box">
+              "Touch every item and ask: Does it spark joy? If not, thank it with gratitude and let it go."
+            </div>
+            <p class="media-cn-desc">
+              近藤麻理惠帶給西方世界的震撼不是丟棄，而是「心動感」與「感謝儀式」。在告別物品前誠懇道謝，徹底化解了內心的虧欠與罪惡感。
+            </p>
+          </div>
+
+          <!-- Show 3 -->
+          <div class="media-card">
+            <span class="media-badge">Documentary</span>
+            <span class="media-title">《極簡主義：記錄重要事物》</span>
+            <span style="font-size: 12px; color: var(--text-subtle);">The Minimalists: Less Is Now</span>
+            <div class="media-script-box">
+              "Love people and use things, because the opposite never works."
+            </div>
+            <p class="media-cn-desc">
+              兩位主角直指消費主義的陷阱：我們買不想要的東西，去討好不喜歡的人。極簡不是無欲無求，而是主動為重要的人際與熱情騰出位置。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 11: Philosophical Reflection -->
+    <div class="slide" data-type="aesthetic" >
+      <div class="slide-card">
+        <span class="slide-tag aesthetic">Philosophy & Mindset</span>
+        <h1 class="slide-h1">Redefining "Enough"</h1>
+        <h2 class="slide-h2">放下不是失去，而是給現在與未來的自己騰出呼吸的空間</h2>
+
+        <div class="reading-box" style="font-size: 16.5px;">
+          "You are not your belongings. You are not your past achievements, and you are not your unfulfilled fantasies. Letting go of what served your past self is the greatest act of hospitality you can offer to the person you are becoming today."
+        </div>
+
+        <div class="capsule-grid" style="margin-top: 8px;">
+          <div class="liquid-capsule">
+            <span class="capsule-title">1. Respecting the Cycle</span>
+            <span class="capsule-desc">每件物品進到生命中都有其使命；完成了，放手讓它流轉到需要的人手中。</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">2. Curating, Not Depriving</span>
+            <span class="capsule-desc">整理不是剝奪快樂，而是如同美術館策展人，只讓真正熱愛的事物留在展廳。</span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">3. The Gift of Blank Space</span>
+            <span class="capsule-desc">留白不是空虛，留白是可能性，是能隨時接納新靈感與新生活的自由。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 12: Action Plan -->
+    <div class="slide" data-type="reading" >
+      <div class="slide-card">
+        <span class="slide-tag reading">Take-Home Practice</span>
+        <h1 class="slide-h1">One Small Step This Week</h1>
+        <h2 class="slide-h2">一個無壓力的本週微實驗：從身體力行感受心理變化</h2>
+
+        <div class="split-grid">
+          <div class="split-card">
+            <span class="split-header">🎯 The Micro-Zone Challenge</span>
+            <p class="split-content">
+              <strong>挑選一個極小範圍：</strong><br>
+              不要選整座大衣櫃！選「皮夾整理」、「床頭櫃」、「辦公桌第一格抽屜」或「手機相簿中 50 張無用截圖」。<br><br>
+              設定 15 分鐘計時器，時間到立刻停手。體驗「完成一個微小神聖空間」的踏實勝任感。
+            </p>
+          </div>
+
+          <div class="split-card">
+            <span class="split-header">📦 The 14-Day Maybe Box</span>
+            <p class="split-content">
+              <strong>親自試驗也許箱：</strong><br>
+              挑出 3 件猶豫不決的物品裝箱貼膠帶，寫上兩週後的日期。兩週後打開，觀察自己對這三件物品的心情是否已經平靜如水。
+            </p>
+          </div>
+        </div>
+
+        <div class="liquid-capsule" style="margin-top: 4px;">
+          <span class="capsule-title">✦ 觀察自己的情緒</span>
+          <span class="capsule-desc">當你猶豫時，在心中標記：這是「稟賦效應」？還是「沉沒成本」？當你給心理現象貼上標籤，理性就會重新接管力量。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 13: Closing & Open Floor -->
+    <div class="slide" data-type="discussion" >
+      <div class="slide-card" style="text-align: center; align-items: center; justify-content: center; padding: 48px 30px;">
+        <span class="slide-tag discussion">Thank You</span>
+        <h1 class="slide-h1" style="font-size: 38px; margin-top: 10px;">Thank You for Joining Today!</h1>
+        <h2 class="slide-h2" style="max-width: 650px; margin: 0 auto;">
+          "The best things in life aren't things."<br>
+          願我們都能在清爽自如的空間裡，找回對生活的從容與喜愛。
+        </h2>
+
+        <div class="capsule-grid" style="max-width: 780px; width: 100%; text-align: left; margin-top: 20px;">
+          <div class="liquid-capsule">
+            <span class="capsule-title">TED References</span>
+            <span class="capsule-desc">
+              • Ingrid Fetell Lee: Where joy hides and how to find it<br>
+              • Graham Hill: Less stuff, more happiness<br>
+              • Christian Jarrett: Why are we so attached to our things? (TED-Ed)
+            </span>
+          </div>
+          <div class="liquid-capsule">
+            <span class="capsule-title">Open Floor Discussion</span>
+            <span class="capsule-desc">
+              大家聽完今天的主題，哪一個心理學名詞或影劇金句最觸動你？<br>
+              歡迎自由開麥分享你的收穫！
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Speaker Notes Drawer (Presenter Only) -->
+  
+
+  <!-- Footer -->
+  <footer class="deck-footer">
+    <div class="footer-hints">
+      <span><span class="key-badge">←</span> <span class="key-badge">→</span> 換頁</span>
+      <span><span class="key-badge">Space</span> 下一頁</span>
+      <span><span class="key-badge">F</span> 全螢幕</span>
+      
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav" id="btnPrev">上一頁</button>
+      <button class="btn-nav" id="btnNext">下一頁</button>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const indicator = document.getElementById('slideIndicator');
+      const ambientGlow = document.getElementById('ambientGlow');
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+      const btnFullscreen = document.getElementById('btnFullscreen');
+      
+      let currentIndex = 0;
+      const totalSlides = slides.length;
+
+      // Speaker Notes Elements (if in presenter mode)
+      const notesDrawer = document.getElementById('notesDrawer');
+      const notesContent = document.getElementById('notesContent');
+      const btnToggleNotes = document.getElementById('btnToggleNotes');
+
+      function updateSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        
+        slides.forEach((s, i) => {
+          s.classList.toggle('active', i === index);
+        });
+
+        currentIndex = index;
+        const padIndex = String(currentIndex + 1).padStart(2, '0');
+        const padTotal = String(totalSlides).padStart(2, '0');
+        indicator.textContent = `${padIndex} / ${padTotal}`;
+
+        // Change ambient glow based on type
+        const type = slides[index].getAttribute('data-type');
+        if (type === 'reading') {
+          ambientGlow.style.background = 'radial-gradient(circle at 20% 20%, rgba(45, 74, 62, 0.22) 0%, transparent 60%)';
+        } else if (type === 'psychology') {
+          ambientGlow.style.background = 'radial-gradient(circle at 70% 30%, rgba(37, 54, 74, 0.22) 0%, transparent 60%)';
+        } else if (type === 'discussion') {
+          ambientGlow.style.background = 'radial-gradient(circle at 40% 70%, rgba(74, 60, 48, 0.22) 0%, transparent 60%)';
+        } else if (type === 'aesthetic') {
+          ambientGlow.style.background = 'radial-gradient(circle at 60% 60%, rgba(68, 46, 59, 0.22) 0%, transparent 60%)';
+        }
+
+        // Update speaker notes
+        if (notesContent && slides[index].hasAttribute('data-notes')) {
+          notesContent.innerHTML = slides[index].getAttribute('data-notes');
+        }
+      }
+
+      function nextSlide() {
+        if (currentIndex < totalSlides - 1) updateSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        if (currentIndex > 0) updateSlide(currentIndex - 1);
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+
+      function toggleNotes() {
+        if (!notesDrawer) return;
+        notesDrawer.classList.toggle('open');
+        if (btnToggleNotes) {
+          btnToggleNotes.classList.toggle('active', notesDrawer.classList.contains('open'));
+        }
+      }
+
+      // Event Listeners
+      btnNext.addEventListener('click', nextSlide);
+      btnPrev.addEventListener('click', prevSlide);
+      btnFullscreen.addEventListener('click', toggleFullscreen);
+
+      if (btnToggleNotes) {
+        btnToggleNotes.addEventListener('click', toggleNotes);
+      }
+
+      const btnCloseNotes = document.getElementById('btnCloseNotes');
+      if (btnCloseNotes) {
+        btnCloseNotes.addEventListener('click', toggleNotes);
+      }
+
+      // Keyboard Controls
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case 'ArrowDown':
+          case ' ':
+          case 'PageDown':
+            e.preventDefault();
+            nextSlide();
+            break;
+          case 'ArrowLeft':
+          case 'ArrowUp':
+          case 'PageUp':
+            e.preventDefault();
+            prevSlide();
+            break;
+          case 'Home':
+            e.preventDefault();
+            updateSlide(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            updateSlide(totalSlides - 1);
+            break;
+          case 'f':
+          case 'F':
+            e.preventDefault();
+            toggleFullscreen();
+            break;
+          case 'n':
+          case 'N':
+            if (notesDrawer) {
+              e.preventDefault();
+              toggleNotes();
+            }
+            break;
+        }
+      });
+
+      // Init
+      updateSlide(0);
+    })();
+  </script>
+</body>
+</html>
