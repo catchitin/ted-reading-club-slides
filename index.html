@@ -796,6 +796,49 @@ h1,h2,h3,p{margin:0}h1,h2,h3{font-family:'Outfit','Segoe UI',Arial,sans-serif;fo
   font-weight: 400 !important;
 }
 
+
+/* Slide 6 Source Badges */
+.source-pill {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 11px !important;
+  color: #dfbd8f !important;
+  background: rgba(231, 189, 128, 0.12) !important;
+  border: 1px solid rgba(231, 189, 128, 0.3) !important;
+  padding: 3px 9px !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  transition: all 0.2s ease !important;
+}
+.source-pill:hover {
+  background: rgba(231, 189, 128, 0.25) !important;
+  color: #ffffff !important;
+  border-color: #e7bd80 !important;
+  transform: translateY(-1px) !important;
+}
+
+.opt-source-tag {
+  font-size: 11px !important;
+  color: #dfbd8f !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 3px 8px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(231, 189, 128, 0.25) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  line-height: 1.2 !important;
+}
+.opt-source-tag:hover {
+  color: #ffffff !important;
+  background: rgba(231, 189, 128, 0.2) !important;
+  border-color: #e7bd80 !important;
+}
+
 </style></head><body><section class="slide cover" data-notes="【你要念的正式開場】
 This week's topic is: What Are We Really Keeping? Aesthetics, identity, and the art of letting go.
 
@@ -940,17 +983,18 @@ If organizing one drawer feels easy but organizing the whole house feels impossi
 <section class="slide discussion" data-notes="【開放式討論開場：英文講稿】
 Let's open the floor to a personal question: What else has clutter actually cost you in real life?
 
-On the right, we have three common options you can pick from:
+On the right, we have three common options:
 1. Lost time—hunting twenty minutes for keys, socks, or misplaced items before running out the door.
 2. Mental drain—feeling restless, guilty, or unable to relax and focus in your own room.
-3. Unexpected habits—like emotional spending, fatigue, or stress snacking.
+3. Health, habits & junk food—like stress snacking, emotional spending, or weight gain.
 
-In fact, some YouTubers and researchers point out that visual clutter spikes cortisol (stress hormone), which directly triggers cravings for junk food, mindless snacking, and weight gain!
+In fact, some YouTubers and researchers point out that visual clutter elevates cortisol (stress hormones), which directly triggers cravings for junk food, mindless snacking, and weight gain!
+(Source: 威翰的商業茶水間 ft.《慢捨離》作者黃惠如，探討雜亂如何讓人變胖、漏財。)
 
 Which of these three rings true for you? Or have you noticed another surprising impact clutter has had on your daily life?
 
 【中文主持提醒】
-鼓勵大家不限於投影片上的 1、2、3，可特別分享：「有 YouTube 創作者分享過雜亂會刺激壓力荷爾蒙（皮質醇），讓人更想吃高熱量垃圾食物、變胖、疲累」等意想不到的影響，引導大家自由發揮！">
+鼓勵大家不限於投影片上的 1、2、3，可特別點出左側標註的 YouTube 訪談（《慢捨離》黃惠如）：雜亂造成的視覺壓力會刺激皮質醇，讓人更想吃高熱量垃圾食物、變胖、疲累等意想不到的生活影響！">
   <div class="slide-inner">
     <div class="discussion-layout">
       <div>
@@ -960,11 +1004,16 @@ Which of these three rings true for you? Or have you noticed another surprising 
           Beyond the mess on the surface, visual chaos impacts our mood, energy, and physical habits in surprising ways.
         </p>
 
-        <!-- YouTube / Research Insight Callout Box -->
+        <!-- YouTube / Research Insight Callout Box with Source -->
         <div class="cost-open-box">
-          <span class="cost-badge">SURPRISING INSIGHT · YT CREATORS</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px; flex-wrap:wrap;">
+            <span class="cost-badge">SURPRISING INSIGHT · YT CREATORS</span>
+            <a href="https://www.youtube.com/watch?v=HsS0LTDDmNw&t=657s" target="_blank" rel="noopener noreferrer" class="source-pill" title="點擊觀看 YouTube 片段：讓你變胖的隱形元兇 (10:57)">
+              <span style="color:#ff3b30; font-size:10px;">▶</span> YT · 慢捨離訪談 (10:57) ↗
+            </a>
+          </div>
           <p class="cost-yt-note">
-            Did you know? Research and organizing creators share that visual clutter spikes stress hormones (cortisol)—which can directly trigger <strong>cravings for junk food</strong>, stress snacking, fatigue, and even weight gain!
+            Did you know? Research and creators share that visual clutter spikes stress hormones (cortisol)—which can directly trigger <strong>cravings for junk food</strong>, stress snacking, fatigue, and even weight gain!
           </p>
           <span class="cost-callout">"What unexpected cost has clutter had on your life?"</span>
         </div>
@@ -999,8 +1048,13 @@ Which of these three rings true for you? Or have you noticed another surprising 
         <article class="question selectable-opt" role="button" tabindex="0">
           <span class="opt-num">03</span>
           <div class="opt-content">
-            <strong>Health, Habits & Junk Food</strong>
-            <p>Stress snacking on junk food, late-night emotional shopping, fatigue, or disrupted sleep.</p>
+            <strong>Health, Habits & Weight Gain</strong>
+            <p>Stress snacking on junk food, emotional spending, fatigue, or weight gain.</p>
+            <div style="margin-top: 6px;">
+              <a href="https://www.youtube.com/watch?v=HsS0LTDDmNw&t=657s" target="_blank" rel="noopener noreferrer" class="opt-source-tag" onclick="event.stopPropagation();" title="觀看 YouTube 片段：家裡這100樣東西讓你變胖？ (10:57)">
+                <span style="color:#ff3b30; font-size:10px;">▶</span> Source: 威翰的商業茶水間 ft.《慢捨離》黃惠如 (10:57) ↗
+              </a>
+            </div>
           </div>
         </article>
 
