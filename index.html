@@ -704,6 +704,98 @@ h1,h2,h3,p{margin:0}h1,h2,h3{font-family:'Outfit','Segoe UI',Arial,sans-serif;fo
   box-shadow: 0 0 25px rgba(231, 189, 128, 0.7) !important;
 }
 
+
+/* Slide 6: Open Discussion & Selectable Options Styling */
+.cost-open-box {
+  background: rgba(10, 26, 22, 0.82) !important;
+  border: 1px solid rgba(231, 189, 128, 0.35) !important;
+  border-radius: 16px !important;
+  padding: 18px 20px !important;
+  margin-top: 18px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+.cost-badge {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+  color: #e7bd80 !important;
+  font-weight: 800 !important;
+  background: rgba(231, 189, 128, 0.15) !important;
+  border: 1px solid rgba(231, 189, 128, 0.35) !important;
+  padding: 3px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 8px !important;
+}
+
+.cost-yt-note {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: clamp(13px, 1.05vw, 15px) !important;
+  color: #ede7dc !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+.cost-yt-note strong {
+  color: #e7bd80 !important;
+  font-weight: 600 !important;
+}
+
+.cost-callout {
+  display: block !important;
+  margin-top: 10px !important;
+  font-size: 13px !important;
+  color: #dfbd8f !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+}
+
+.selectable-opt {
+  cursor: pointer !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+  user-select: none !important;
+}
+
+.selectable-opt:hover {
+  transform: translateY(-2px) !important;
+  border-color: #e7bd80 !important;
+  box-shadow: 0 0 0 2px rgba(231, 189, 128, 0.35), 0 18px 38px rgba(0, 0, 0, 0.5) !important;
+}
+
+.selectable-opt.active {
+  background: linear-gradient(145deg, rgba(28, 62, 53, 0.95), rgba(12, 32, 27, 0.98)) !important;
+  border-color: #e7bd80 !important;
+  box-shadow: 0 0 0 3px rgba(231, 189, 128, 0.55), 0 20px 42px rgba(0, 0, 0, 0.6) !important;
+}
+
+.selectable-opt .opt-num {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #e7bd80 !important;
+  letter-spacing: 0.05em !important;
+}
+
+.selectable-opt .opt-content strong {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: clamp(16px, 1.25vw, 19px) !important;
+  color: #ffffff !important;
+  display: block !important;
+  margin-bottom: 3px !important;
+}
+
+.selectable-opt .opt-content p {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: clamp(13px, 1.05vw, 15px) !important;
+  color: #cfc6b5 !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+}
+
 </style></head><body><section class="slide cover" data-notes="【你要念的正式開場】
 This week's topic is: What Are We Really Keeping? Aesthetics, identity, and the art of letting go.
 
@@ -845,24 +937,144 @@ If organizing one drawer feels easy but organizing the whole house feels impossi
     </div>
     <div class="card-zh">決策疲勞</div><p>Making many choices in a row can feel mentally tiring.</p><div class="card-example">Sorting an entire room at once can become overwhelming.</div></article></div></div></section>
 
-<section class="slide discussion" data-notes="【討論壞處：英文開場】
-We've explored how we get attached to our things. Now let's look at real life: What does all this clutter actually cost us?
-Has a messy space ever drained your time, your focus, or your energy? Have you ever spent twenty minutes looking for your keys, or felt exhausted just looking at a crowded room?
+<section class="slide discussion" data-notes="【開放式討論開場：英文講稿】
+Let's open the floor to a personal question: What else has clutter actually cost you in real life?
 
-【邀請分享】
-Would anyone like to share a small moment when clutter felt overwhelming or cost you peace of mind?
+On the right, we have three common options you can pick from:
+1. Lost time—hunting twenty minutes for keys, socks, or misplaced items before running out the door.
+2. Mental drain—feeling restless, guilty, or unable to relax and focus in your own room.
+3. Unexpected habits—like emotional spending, fatigue, or stress snacking.
 
-【中文提醒】先聊雜亂在生活中的隱形代價（時間、專注力、心情），再帶出下一頁的慢速整理對策。"><div class="slide-inner"><div class="discussion-layout"><div><div class="eyebrow"><span class="eyebrow-line"></span>THE REAL COST OF CLUTTER</div><h2>What has clutter<br/><span class="accent">cost you?</span></h2><p class="discuss-intro">Small everyday moments can tell us a lot.</p></div><div class="question-list"><article class="question"><span>01</span><p>Have you ever wasted time looking for something?</p></article><article class="question"><span>02</span><p>Has a messy room made it harder to relax or focus?</p></article><article class="question"><span>03</span><p>Have you ever felt better after clearing just one space?</p></article></div></div></div></section>
+In fact, some YouTubers and researchers point out that visual clutter spikes cortisol (stress hormone), which directly triggers cravings for junk food, mindless snacking, and weight gain!
 
-<section class="slide methods" data-notes="【承接壞處，給出溫和對策】
-Understanding how clutter drains us doesn't mean we need an extreme, exhausting clean-up in a single weekend.
-Here is a gentler, more sustainable approach: Slow Decluttering.
+Which of these three rings true for you? Or have you noticed another surprising impact clutter has had on your daily life?
 
-1. 15 Minutes: Start with just one drawer or flat surface. When the timer rings, stop.
-2. The Maybe Box: If letting go feels too painful today, put it in a box for 30 days. No pressure.
-3. One In, One Out: Protect the breathing room in your home.
+【中文主持提醒】
+鼓勵大家不限於投影片上的 1、2、3，可特別分享：「有 YouTube 創作者分享過雜亂會刺激壓力荷爾蒙（皮質醇），讓人更想吃高熱量垃圾食物、變胖、疲累」等意想不到的影響，引導大家自由發揮！">
+  <div class="slide-inner">
+    <div class="discussion-layout">
+      <div>
+        <div class="eyebrow"><span class="eyebrow-line"></span>OPEN DISCUSSION · THE HIDDEN COST</div>
+        <h2>What else has clutter<br/><span class="accent">cost you?</span></h2>
+        <p class="discuss-intro" style="font-size: clamp(16px, 1.35vw, 21px); color: #dcd3c1; margin-top: 8px; line-height: 1.45;">
+          Beyond the mess on the surface, visual chaos impacts our mood, energy, and physical habits in surprising ways.
+        </p>
 
-【中文提醒】分享小步前進的具體對策，並引導至接下來的三部啟發影集。"><div class="slide-inner"><div class="methods-layout"><div><div class="eyebrow"><span class="eyebrow-line"></span>PRACTICAL SOLUTIONS · SLOW DECLUTTERING</div><h2>Slow<br/><span class="accent">Decluttering.</span></h2><p class="methods-intro">Small changes are easier to live with than a perfect clean-up that lasts one day.</p></div><div class="methods-list"><article class="method-card"><div class="method-symbol">15</div><div class="method-copy"><span>MINUTES</span><p>Start with one small area. Stop before it feels overwhelming.</p></div></article><article class="method-card"><div class="method-symbol">?</div><div class="method-copy"><span>MAYBE BOX</span><p>Put uncertain items aside. Give yourself time to decide.</p></div></article><article class="method-card"><div class="method-symbol">1:1</div><div class="method-copy"><span>ONE IN · ONE OUT</span><p>When a new item comes in, consider letting an old one go.</p></div></article></div></div></div></section>
+        <!-- YouTube / Research Insight Callout Box -->
+        <div class="cost-open-box">
+          <span class="cost-badge">SURPRISING INSIGHT · YT CREATORS</span>
+          <p class="cost-yt-note">
+            Did you know? Research and organizing creators share that visual clutter spikes stress hormones (cortisol)—which can directly trigger <strong>cravings for junk food</strong>, stress snacking, fatigue, and even weight gain!
+          </p>
+          <span class="cost-callout">"What unexpected cost has clutter had on your life?"</span>
+        </div>
+      </div>
+
+      <!-- Right Side: 3 Selectable Options + Open Sharing -->
+      <div class="question-list">
+        <div class="options-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
+          <span style="font-family:'Outfit',sans-serif; font-size:12px; letter-spacing:0.12em; color:#e7bd80; font-weight:700;">CHOOSE AN OPTION · OR SHARE YOUR OWN</span>
+          <span style="font-size:12px; color:#a89f8f;">點擊可選 · 或自由分享</span>
+        </div>
+
+        <!-- Option 01 -->
+        <article class="question selectable-opt" role="button" tabindex="0">
+          <span class="opt-num">01</span>
+          <div class="opt-content">
+            <strong>Lost Time & Daily Friction</strong>
+            <p>Spending twenty minutes frantically hunting for keys, clothes, or misplaced receipts before leaving home.</p>
+          </div>
+        </article>
+
+        <!-- Option 02 -->
+        <article class="question selectable-opt" role="button" tabindex="0">
+          <span class="opt-num">02</span>
+          <div class="opt-content">
+            <strong>Mental Drain & Low Focus</strong>
+            <p>Feeling restless, guilty, or unable to focus or truly relax when relaxing at home.</p>
+          </div>
+        </article>
+
+        <!-- Option 03 -->
+        <article class="question selectable-opt" role="button" tabindex="0">
+          <span class="opt-num">03</span>
+          <div class="opt-content">
+            <strong>Health, Habits & Junk Food</strong>
+            <p>Stress snacking on junk food, late-night emotional shopping, fatigue, or disrupted sleep.</p>
+          </div>
+        </article>
+
+        <!-- Open Invite Footer -->
+        <div class="opt-open-invite" style="padding: 10px 16px; background: rgba(231, 189, 128, 0.1); border: 1px dashed rgba(231, 189, 128, 0.4); border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 13px; color: #ede7dc;">✨ Have another unexpected story? We'd love to hear it!</span>
+          <span style="font-family:'Outfit',sans-serif; font-size: 12px; color: var(--gold); font-weight: 700;">YOUR TURN →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide methods" data-notes="【對策與技巧分享：Show Your Tips】
+Now that we've talked about the real cost of clutter, let's look at practical solutions: Show Your Tips!
+
+Here are three gentle ways to start that have worked for many people:
+1. 15 Minutes: Set a timer, clear one corner or a single drawer, then stop.
+2. The Maybe Box: Give hesitant items a 30-day trial without any guilt.
+3. One In, One Out: Protect the boundary and breathing room of your home.
+
+Now, what about you? What is one small organizing trick, daily habit, or mindset that helps you keep things in order?
+Who would like to show us their tip first?
+
+【中文主持提醒】
+介紹完三種小步前進的實用對策後，把話語權交給現場成員：「Show your tips! 大家自己有什麼實用的小訣竅？」大家分享完後，即可進入壓軸的 3 部經典影集推薦！">
+  <div class="slide-inner">
+    <div class="methods-layout">
+      <div>
+        <div class="eyebrow"><span class="eyebrow-line"></span>PRACTICAL SOLUTIONS · YOUR TURN</div>
+        <h2>Show<br/><span class="accent">Your Tips.</span></h2>
+        <p class="methods-intro" style="font-size: clamp(16px, 1.35vw, 21px); color: #dcd3c1; margin-top: 10px; line-height: 1.45;">
+          Small changes are easier to live with than an extreme clean-up. Here are three gentle starters—what works for you?
+        </p>
+
+        <div style="margin-top: 24px; padding: 16px 20px; background: rgba(10, 26, 22, 0.82); border: 1px solid rgba(231, 189, 128, 0.35); border-radius: 16px;">
+          <span style="font-family:'Outfit',sans-serif; font-size:11px; letter-spacing:0.12em; color:#e7bd80; font-weight:800; display:block; margin-bottom:6px;">OPEN INVITATION · 分享你的小訣竅</span>
+          <p style="font-size: 14px; color: #ede7dc; line-height: 1.45; margin: 0;">
+            Every home has its own rhythm. Whether it’s a 2-minute rule, a donation basket by the door, or a favorite storage box—show us what works for you!
+          </p>
+        </div>
+      </div>
+
+      <div class="methods-list">
+        <!-- Tip 1 -->
+        <article class="method-card">
+          <div class="method-symbol">15</div>
+          <div class="method-copy">
+            <span>MINUTES · MICRO-HABIT</span>
+            <p>Start with one small corner or a single drawer. When the 15-minute timer rings, stop without guilt.</p>
+          </div>
+        </article>
+
+        <!-- Tip 2 -->
+        <article class="method-card">
+          <div class="method-symbol" style="font-size: 26px;">?</div>
+          <div class="method-copy">
+            <span>THE MAYBE BOX · GENTLE MINDSET</span>
+            <p>Not ready to decide? Put items in a sealed box for 30 days. If you didn't miss them, let them go.</p>
+          </div>
+        </article>
+
+        <!-- Tip 3 -->
+        <article class="method-card">
+          <div class="method-symbol" style="font-size: 26px;">1:1</div>
+          <div class="method-copy">
+            <span>ONE IN, ONE OUT · CLEAR BOUNDARY</span>
+            <p>Before bringing a new item home, designate an older one to donate, gift, or recycle.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="slide show-intro" data-notes="【三部啟發影集分享】
 Before we wrap up, I want to share three shows about decluttering and organizing that have inspired me in different ways. Have you watched any of these? Please raise your hand!
@@ -919,45 +1131,6 @@ Which approach resonates with you the most?">
           <small>NETFLIX · 怦然心動人生整理 · 預告片 ▶</small>
         </div>
       </a>
-    </div>
-  </div>
-</section>
-
-<section class="slide closing" data-notes="【結尾分享：整理小訣竅】
-To wrap up tonight's reading circle, let's open the floor to everyone:
-
-What is one small decluttering or organizing habit that has worked for you in real life?
-It doesn't have to be extreme or perfect—just a simple practice that gives your home a little more breathing room.
-
-Who would like to share first?">
-  <div class="slide-inner closing-inner">
-    <div class="eyebrow"><span class="eyebrow-line"></span>CLOSING CIRCLE · YOUR TIPS</div>
-    <h2>What works <span class="accent">for you?</span></h2>
-    <p class="discuss-intro" style="max-width: 740px;">Every home has its own rhythm. What is one small organizing habit, tool, or mindset that brings you peace?</p>
-
-    <div class="closing-grid">
-      <article class="closing-card">
-        <span class="card-num">01 · MICRO-HABIT</span>
-        <strong>A Daily Action</strong>
-        <p>Clear one flat surface before bed, use the 2-minute rule, or keep keys in the exact same dish every single day.</p>
-      </article>
-
-      <article class="closing-card">
-        <span class="card-num">02 · GENTLE MINDSET</span>
-        <strong>A Way of Thinking</strong>
-        <p>Take a photo of sentimental souvenirs before donating, or ask yourself: "Does this support who I am today?"</p>
-      </article>
-
-      <article class="closing-card">
-        <span class="card-num">03 · SIMPLE TOOL</span>
-        <strong>A Practical Helper</strong>
-        <p>Keep a "Maybe Box" in the closet for 30 days, place a donation basket by the door, or label transparent bins.</p>
-      </article>
-    </div>
-
-    <div class="closing-invite-box">
-      <span>"There is no single right way to declutter. What is one trick you personally use?"</span>
-      <span style="color: var(--gold); font-weight: 600; font-size: 14px; letter-spacing: 0.05em;">YOUR TURN →</span>
     </div>
   </div>
 </section>
@@ -1053,6 +1226,14 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
+
+// Interactive click toggle for Slide 6 selectable options
+document.querySelectorAll('.selectable-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    opt.classList.toggle('active');
+  });
+});
+
 render();}
 function toggleNotes(){notePanel.classList.toggle('open');}
 document.querySelector('#prev').onclick=()=>go(-1);document.querySelector('#next').onclick=()=>go(1);document.querySelector('#noteBtn').onclick=toggleNotes;document.querySelector('#closeNotes').onclick=toggleNotes;document.querySelector('#full').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()};
@@ -1124,6 +1305,14 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     closeVideo();
   }
+});
+
+
+// Interactive click toggle for Slide 6 selectable options
+document.querySelectorAll('.selectable-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    opt.classList.toggle('active');
+  });
 });
 
 render();
